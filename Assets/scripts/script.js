@@ -109,11 +109,14 @@ $(document).ready(function () {
               //retrieving the daily temperatures
               var dailyTempEl= (response.list[i].main.temp - 273.15)* 1.80+32;
               var tempEl= $("<p>").text("Temp: " + dailyTempEl.toFixed(2) +"F");
+              //retrieving daily humidity
+              var dailyHumidityEl= $("<p>").text("Humidity: "+ response.list[i].main.humidity + "%");
 
-              cardDiv.append(forecastDate).append(tempEl)
+              //appending elements
+              cardDiv.append(forecastDate).append(tempEl).append(dailyHumidityEl)
               $("#daily-forecast").append(cardDiv);
             }
-            
+
           
           console.log(response.list[i])
           //how to grab daily foreccast
@@ -123,10 +126,8 @@ $(document).ready(function () {
         // TODO
           //complete five day forecast
           //icons line 33
-          //fix url... getting error if not default value of atl, ga 
       });
     
     });
   }
-  // displayCurrentCity();
 });
