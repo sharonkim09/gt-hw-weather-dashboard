@@ -37,7 +37,7 @@ $(document).ready(function () {
       var icon = response.weather[0].icon
       console.log(icon)
       //icon url http://openweathermap.org/img/wn/10d@2x.png
-      var imageIcon= $("<img>").attr("src","http://openweathermap.org/img/wn/"+response.weather[0].icon +".png")
+      var imageIcon= $("<img>").attr("src","http://openweathermap.org/img/w/"+ icon +".png")
       $("#city-name").html("<h1>" + response.name + "</h1>");
       var currentDate = moment().format("L");
       var dateEl = $("<span>").text("(" + currentDate + ")" +imageIcon);
@@ -99,8 +99,19 @@ $(document).ready(function () {
         console.log(response.list);
         //Iterate through api array to retrieve forecast
         for (var i = 0; i < response.list.length; i++) {
-          // $("#daily-forecast").append();
+          //retrieve the 5 day forecast of only 3:00pm
+            if(response.list[i].dt_txt.indexOf("15:00:00")!== -1){
+              var cardDiv = $("<div>")
+              $("#daily-forecast").append(cardDiv)
+              var dateEl= moment(response.list[i].dt_txt).format("MM/DD/YYYY")
+              var forecastDate = $("<h4>").text(dateEl);
 
+              cardDiv.append(forecastDate)
+              $("#daily-forecast").append(cardDiv);
+            }
+          
+          console.log(response.list[i])
+          //how to grab daily foreccast
           // var currentDate=moment(response.list[i].dt_txt).format("L")
           // console.log(currentDate)
         }
