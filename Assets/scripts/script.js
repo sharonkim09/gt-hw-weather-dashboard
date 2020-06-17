@@ -19,7 +19,7 @@ $(document).ready(function () {
     // localStorage.setItem(listOfCities, JSON.stringify(city))
   });
 
-  // working on searching city value and displaying city to the page
+  // Still need to work on changing default city to user input....
   //
   function displayCurrentCity(city) {
     var queryURL =
@@ -64,8 +64,15 @@ $(document).ready(function () {
 
         //Conditional to color UV-index
         //UV index <3 green
-        //UV inddex <7 orange
+        if(uvNum <=3){
+          spanEl.css({"background-color": "green", "color": "white"})
+        }
+        //UV index <7 orange
+          spanEl.css({"background-color": "orange", "color": "white"})
         //UV index >7 red  
+        if(uvNum > 7){
+          spanEl.css({"background-color": "red", "color": "white"})
+        }
         // if()
       });
     });
