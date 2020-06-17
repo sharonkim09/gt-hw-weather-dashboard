@@ -37,11 +37,13 @@ $(document).ready(function () {
       var icon = response.weather[0].icon
       console.log(icon)
       //icon url http://openweathermap.org/img/wn/10d@2x.png
-      var imageIcon= $("<img>").attr("src","http://openweathermap.org/img/w/"+ icon +".png")
+      // var imageIcon= $("<img>").attr("src","http://openweathermap.org/img/w/"+ icon +".png")
+      var imageIcon = "http://openweathermap.org/img/w/" + icon +".png";
+      var imgEl = $("<img>").attr("src", imageIcon)
       $("#city-name").html("<h1>" + response.name + "</h1>");
       var currentDate = moment().format("L");
-      var dateEl = $("<span>").text("(" + currentDate + ")" +imageIcon);
-      $("#city-name").append(dateEl);
+      var dateEl = $("<span>").text("(" + currentDate + ")");
+      $("#city-name").append(dateEl).append(imgEl);
       var tempF = (response.main.temp - 273.15) * 1.8 + 32;
       $("#temperature").text("Temperature: " + tempF.toFixed(2)+ "°F");
       $("#wind-speed").text("Wind Speed: " + response.wind.speed + "MPH");
@@ -116,16 +118,9 @@ $(document).ready(function () {
               cardDiv.append(forecastDate).append(tempEl).append(dailyHumidityEl)
               $("#daily-forecast").append(cardDiv);
             }
-
-          
-          console.log(response.list[i])
-          //how to grab daily foreccast
-          // var currentDate=moment(response.list[i].dt_txt).format("L")
-          // console.log(currentDate)
         }
         // TODO
-          //complete five day forecast
-          //icons line 33
+          //icons need to include
       });
     
     });
