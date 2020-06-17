@@ -38,8 +38,8 @@ $(document).ready(function () {
       console.log(icon)
       //icon url http://openweathermap.org/img/wn/10d@2x.png
       // var imageIcon= $("<img>").attr("src","http://openweathermap.org/img/w/"+ icon +".png")
-      var imageIcon = "http://openweathermap.org/img/w/" + icon +".png";
-      var imgEl = $("<img>").attr("src", imageIcon)
+      var imageIconURL = "http://openweathermap.org/img/w/" + icon +".png";
+      var imgEl = $("<img>").attr("src", imageIconURL)
       $("#city-name").html("<h1>" + response.name + "</h1>");
       var currentDate = moment().format("L");
       var dateEl = $("<span>").text("(" + currentDate + ")");
@@ -113,9 +113,12 @@ $(document).ready(function () {
               var tempEl= $("<p>").text("Temp: " + dailyTempEl.toFixed(2) +"F");
               //retrieving daily humidity
               var dailyHumidityEl= $("<p>").text("Humidity: "+ response.list[i].main.humidity + "%");
-
+              //retrieving weather icons
+              var imgIcon2= response.list[i].weather[0].icon;
+              var imgIconURL="http://openweathermap.org/img/w/"+ imgIcon2 + ".png"
+              var imgEl2 = $("<img>").attr("src", imgIconURL)
               //appending elements
-              cardDiv.append(forecastDate).append(tempEl).append(dailyHumidityEl)
+              cardDiv.append(forecastDate).append(imgEl2).append(tempEl).append(dailyHumidityEl)
               $("#daily-forecast").append(cardDiv);
             }
         }
