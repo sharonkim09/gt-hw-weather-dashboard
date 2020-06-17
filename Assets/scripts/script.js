@@ -3,11 +3,11 @@ $(document).ready(function () {
   // Weather api key
   var apiKey = "50a87d4b351a7113897cea2824a44158";
   //using array for local storage
-  var cities = [];
+  var citiesArray = [];
   // Current date displayed
   var currentDate = moment().format("L");
   console.log(currentDate);
-
+  getLocalStorage()
   //checking on search btn
   $("#search-city-btn").on("click", function () {
     event.preventDefault();
@@ -18,9 +18,16 @@ $(document).ready(function () {
     $("ul").append(liEl);
     liEl.append(city);
       displayCurrentCity(city)
-    // localStorage.setItem(listOfCities, JSON.stringify(city))
+      citiesArray.push(city);
+    localStorage.setItem("cities", JSON.stringify(citiesArray))
+    
   });
-
+  function getLocalStorage(){
+    var storage = JSON.parse(localStorage.getItem("cities"));
+    if (storage !== null) {
+        citiesArray = storage;
+    }
+  }
   // Still need to work on changing default city to user input....
   //Function to perform AJAX request to display weather of city
   function displayCurrentCity(city) {
