@@ -30,6 +30,10 @@ $(document).ready(function () {
     }).then(function (response) {
       console.log(queryURL);
       console.log(response);
+      //icon
+      var icon = response.weather[0].icon
+      console.log(icon)
+      //icon url http://openweathermap.org/img/wn/10d@2x.png
       $("#city-name").html("<h1>" + response.name + "</h1>");
       var currentDate = moment().format("L");
       var dateEl = $("<span>").text("(" + currentDate + ")");
@@ -77,15 +81,26 @@ $(document).ready(function () {
       //five day forecast
       //append to #daily-forecast
       //how?
-      //similar to the other ajax calls 
-      var forecastURL = "https://api.openweathermap.org/data/2.5/forecast?q=Atlanta,Georgia&appid="+ apiKey;
+      //similar to the other ajax calls
+      var forecastURL =
+        "https://api.openweathermap.org/data/2.5/forecast?q=Atlanta,Georgia&appid=" +
+        apiKey;
       console.log(forecastURL);
       $.ajax({
-        url:forecastURL,
-        method:"GET",
-      }).then(function(response){
-        console.log(response)
-      })
+        url: forecastURL,
+        method: "GET",
+      }).then(function (response) {
+        console.log(response);
+        console.log(response.list);
+        //Iterate through api array to retrieve forecast
+        for (var i = 0; i < 5; i++) {}
+
+
+        // TODO
+          //complete five day forecast
+          //icons line 33
+          //fix url... getting error if not default value of atl, ga 
+      });
     });
   }
   displayCurrentCity();
