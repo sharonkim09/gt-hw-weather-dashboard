@@ -6,7 +6,7 @@ Use the [OpenWeather API](https://openweathermap.org/api) to retrieve weather da
 
 ## User Story
 
-```
+[Deployed Application]( https://sharonkim09.github.io/gt-hw-weather-dashboard/)
 AS A traveler
 I WANT to see the weather outlook for multiple cities
 SO THAT I can plan a trip accordingly
