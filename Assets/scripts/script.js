@@ -2,6 +2,7 @@ $(document).ready(function () {
   // console.log("Hello")
   // Weather api key
   var apiKey = "50a87d4b351a7113897cea2824a44158";
+  //using array for local storage
   var cities = [];
   // Current date displayed
   var currentDate = moment().format("L");
@@ -16,14 +17,16 @@ $(document).ready(function () {
     var liEl = $("<li>");
     $("ul").append(liEl);
     liEl.append(city);
+      displayCurrentCity(city)
     // localStorage.setItem(listOfCities, JSON.stringify(city))
   });
 
   // Still need to work on changing default city to user input....
   //Function to perform AJAX request to display weather of city
   function displayCurrentCity(city) {
+    // var city = $("#search-city").val();
     var queryURL =
-      "https://api.openweathermap.org/data/2.5/weather?q=Atlanta,Georgia&appid=50a87d4b351a7113897cea2824a44158";
+      "https://api.openweathermap.org/data/2.5/weather?q="+ city+ "&appid=50a87d4b351a7113897cea2824a44158";
     $.ajax({
       url: queryURL,
       method: "GET",
@@ -34,14 +37,15 @@ $(document).ready(function () {
       var icon = response.weather[0].icon
       console.log(icon)
       //icon url http://openweathermap.org/img/wn/10d@2x.png
+      var imageIcon= $("<img>").attr("src","http://openweathermap.org/img/wn/"+response.weather[0].icon +".png")
       $("#city-name").html("<h1>" + response.name + "</h1>");
       var currentDate = moment().format("L");
-      var dateEl = $("<span>").text("(" + currentDate + ")");
+      var dateEl = $("<span>").text("(" + currentDate + ")" +imageIcon);
       $("#city-name").append(dateEl);
       var tempF = (response.main.temp - 273.15) * 1.8 + 32;
-      $("#temperature").text("Temperature (F) " + tempF.toFixed(2));
-      $("#wind-speed").text("Wind Speed: " + response.wind.speed);
-      $("#humidity").text("Humidity: " + response.main.humidity);
+      $("#temperature").text("Temperature: " + tempF.toFixed(2)+ "°F");
+      $("#wind-speed").text("Wind Speed: " + response.wind.speed + "MPH");
+      $("#humidity").text("Humidity: " + response.main.humidity +"%");
 
       //UV-Index AJAX Call
       //Setting Latitude and Longitude to var so that it can be accessed easily
@@ -82,8 +86,9 @@ $(document).ready(function () {
       //append to #daily-forecast
       //how?
       //similar to the other ajax calls
+
       var forecastURL =
-        "https://api.openweathermap.org/data/2.5/forecast?q=Atlanta,Georgia&appid=" +
+        "https://api.openweathermap.org/data/2.5/forecast?q="+ city+"&appid=" +
         apiKey;
       console.log(forecastURL);
       $.ajax({
@@ -93,15 +98,19 @@ $(document).ready(function () {
         console.log(response);
         console.log(response.list);
         //Iterate through api array to retrieve forecast
-        for (var i = 0; i < 5; i++) {}
+        for (var i = 0; i < response.list.length; i++) {
+          // $("#daily-forecast").append();
 
-
+          // var currentDate=moment(response.list[i].dt_txt).format("L")
+          // console.log(currentDate)
+        }
         // TODO
           //complete five day forecast
           //icons line 33
           //fix url... getting error if not default value of atl, ga 
       });
+    
     });
   }
-  displayCurrentCity();
+  // displayCurrentCity();
 });
