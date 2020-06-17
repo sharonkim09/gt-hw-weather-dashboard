@@ -1,7 +1,7 @@
 # 06 Server-Side APIs: Weather Dashboard
+## Description
 
-Developers are often tasked with retrieving data from another application's API and using it in the context of their own. Third-party APIs allow developers to access their data and functionality by making requests with specific parameters to a URL. Your challenge is to build a weather dashboard that will run in the browser and feature dynamically updated HTML and CSS.
-
+This is a weather dashboard that will run in the browser and feature dynamically updated HTML and CSS and a third-party API of Weather is used. User is able to enter a city and will be shown current day weather information and a five day forecast as well. 
 
 ## Table of Contents
 * [Installation](#installation)
@@ -26,8 +26,7 @@ The following image demonstrates the application functionality:
 ## Credits
 This design was designed by the curriculum team. The instructions were provided to me by GT Full Stack Coding Program.
 
-Credit to W3 schools for helping me understand concepts used in this application.
-
+Credit to classwork activities for helping me understand the concepts. 
 
 ## License
 MIT License
