@@ -20,7 +20,7 @@ $(document).ready(function () {
   });
 
   // Still need to work on changing default city to user input....
-  //
+  //Function to perform AJAX request to display weather of city
   function displayCurrentCity(city) {
     var queryURL =
       "https://api.openweathermap.org/data/2.5/weather?q=Atlanta,Georgia&appid=50a87d4b351a7113897cea2824a44158";
@@ -64,17 +64,28 @@ $(document).ready(function () {
 
         //Conditional to color UV-index
         //UV index <3 green
-        if(uvNum <=3){
-          spanEl.css({"background-color": "green", "color": "white"})
+        if (uvNum <= 3) {
+          spanEl.css({ "background-color": "green", color: "white" });
         }
         //UV index <7 orange
-          spanEl.css({"background-color": "orange", "color": "white"})
-        //UV index >7 red  
-        if(uvNum > 7){
-          spanEl.css({"background-color": "red", "color": "white"})
+        spanEl.css({ "background-color": "orange", color: "white" });
+        //UV index >7 red
+        if (uvNum > 7) {
+          spanEl.css({ "background-color": "red", color: "white" });
         }
-        // if()
       });
+      //five day forecast
+      //append to #daily-forecast
+      //how?
+      //similar to the other ajax calls 
+      var forecastURL = "https://api.openweathermap.org/data/2.5/forecast?q=Atlanta,Georgia&appid="+ apiKey;
+      console.log(forecastURL);
+      $.ajax({
+        url:forecastURL,
+        method:"GET",
+      }).then(function(response){
+        console.log(response)
+      })
     });
   }
   displayCurrentCity();
