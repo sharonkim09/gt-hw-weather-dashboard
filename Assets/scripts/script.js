@@ -102,13 +102,18 @@ $(document).ready(function () {
           //retrieve the 5 day forecast of only 3:00pm
             if(response.list[i].dt_txt.indexOf("15:00:00")!== -1){
               var cardDiv = $("<div>")
+              //retrieving the daily dates
               $("#daily-forecast").append(cardDiv)
               var dateEl= moment(response.list[i].dt_txt).format("MM/DD/YYYY")
               var forecastDate = $("<h4>").text(dateEl);
+              //retrieving the daily temperatures
+              var dailyTempEl= (response.list[i].main.temp - 273.15)* 1.80+32;
+              var tempEl= $("<p>").text("Temp: " + dailyTempEl.toFixed(2) +"F");
 
-              cardDiv.append(forecastDate)
+              cardDiv.append(forecastDate).append(tempEl)
               $("#daily-forecast").append(cardDiv);
             }
+            
           
           console.log(response.list[i])
           //how to grab daily foreccast
