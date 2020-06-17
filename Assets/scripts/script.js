@@ -30,7 +30,10 @@ $(document).ready(function () {
         }).then(function(response) {
             console.log(queryURL)
           console.log(response);
-          $('#city-name').html('<h1>' + response.name + ' Weather Details</h1>');
+          $('#city-name').html('<h1>' + response.name + '</h1>');
+          var currentDate = moment().format("L");
+          var dateEl= $("<span>").text("("+currentDate+")");
+          $("#city-name").append(dateEl);
           var tempF = (response.main.temp - 273.15) * 1.8 + 32;
           $('#temperature').text('Temperature (F) ' + tempF.toFixed(2));
           $('#wind-speed').text('Wind Speed: ' + response.wind.speed);
