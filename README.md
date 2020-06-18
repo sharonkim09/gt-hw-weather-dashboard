@@ -3,6 +3,7 @@
 
 This is a weather dashboard that will run in the browser and feature dynamically updated HTML and CSS and a third-party API of Weather is used. User is able to enter a city and will be shown current day weather information and a five day forecast as well. 
 
+**Error of clicking on searched cities(will fix when I figure it out!)
 ## Table of Contents
 * [Installation](#installation)
 * [Usage](#usage)
@@ -16,12 +17,13 @@ This is a weather dashboard that will run in the browser and feature dynamically
 
 ## Usage
 
-Deployed Application]( https://sharonkim09.github.io/gt-hw-weather-dashboard/)
-
+[Deployed Application]( https://sharonkim09.github.io/gt-hw-weather-dashboard/)
+![weather info](./Assets/images/screenshot.png)
+![local storage](./Assets/images/localstorage.png)
 
 The following image demonstrates the application functionality:
 
-![weather dashboard demo](./Assets/06-server-side-apis-homework-demo.png)
+![weather dashboard demo](./Assets/images/06-server-side-apis-homework-demo.png)
 
 ## Credits
 This design was designed by the curriculum team. The instructions were provided to me by GT Full Stack Coding Program.
