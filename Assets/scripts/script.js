@@ -17,6 +17,7 @@ $(document).ready(function () {
     // var liEl = $("<li>");
     // $("ul").append(liEl);
     // liEl.append(city);
+    $("#daily-forecast").empty();
       displayCurrentCity(city)
       citiesArray.push(city);
     localStorage.setItem("cities", JSON.stringify(citiesArray))
@@ -48,7 +49,6 @@ $(document).ready(function () {
   // Still need to work on changing default city to user input....
   //Function to perform AJAX request to display weather of city
   function displayCurrentCity(city) {
-    // var city = $("#search-city").val();
     var queryURL =
       "https://api.openweathermap.org/data/2.5/weather?q="+ city+ "&appid=50a87d4b351a7113897cea2824a44158";
     $.ajax({
@@ -64,7 +64,7 @@ $(document).ready(function () {
       // var imageIcon= $("<img>").attr("src","http://openweathermap.org/img/w/"+ icon +".png")
       var imageIconURL = "http://openweathermap.org/img/w/" + icon +".png";
       var imgEl = $("<img>").attr("src", imageIconURL)
-      $("#city-name").html("<h1>" + response.name + "</h1>");
+      $("#city-name").html("<h2>" + response.name + "</h2>");
       var currentDate = moment().format("L");
       var dateEl = $("<span>").text("(" + currentDate + ")");
       $("#city-name").append(dateEl).append(imgEl);
@@ -127,11 +127,11 @@ $(document).ready(function () {
         for (var i = 0; i < response.list.length; i++) {
           //retrieve the 5 day forecast of only 3:00pm
             if(response.list[i].dt_txt.indexOf("15:00:00")!== -1){
-              var cardDiv = $("<div>")
+              var cardDiv = $("<div class='card-body'>")
               //retrieving the daily dates
               $("#daily-forecast").append(cardDiv)
               var dateEl= moment(response.list[i].dt_txt).format("MM/DD/YYYY")
-              var forecastDate = $("<h4>").text(dateEl);
+              var forecastDate = $("<h3>").text(dateEl);
               //retrieving the daily temperatures
               var dailyTempEl= (response.list[i].main.temp - 273.15)* 1.80+32;
               var tempEl= $("<p>").text("Temp: " + dailyTempEl.toFixed(2) +"F");
@@ -146,8 +146,6 @@ $(document).ready(function () {
               $("#daily-forecast").append(cardDiv);
             }
         }
-        // TODO
-          //icons need to include
       });
     
     });
