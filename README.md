@@ -3,6 +3,7 @@
 
 This is a weather dashboard that will run in the browser and feature dynamically updated HTML and CSS and a third-party API of Weather is used. User is able to enter a city and will be shown current day weather information and a five day forecast as well. 
 
+**Error of clicking on searched cities(will fix when I figure it out!)
 ## Table of Contents
 * [Installation](#installation)
 * [Usage](#usage)
