@@ -6,51 +6,53 @@ $(document).ready(function () {
   var citiesArray = [];
   // Current date displayed
   var currentDate = moment().format("L");
-  console.log(currentDate);
-  getLocalStorage()
+  // console.log(currentDate);
+  getLocalStorage();
   //checking on search btn
   $("#search-city-btn").on("click", function () {
     event.preventDefault();
-    console.log("You have searched!");
+    // console.log("You have searched!");
     var city = $("#search-city").val();
-    console.log(city);
-    // var liEl = $("<li>");
-    // $("ul").append(liEl);
-    // liEl.append(city);
+    // console.log(city);
+    //Need to empty or it will keep adding to searched cities
     $("#daily-forecast").empty();
-      displayCurrentCity(city)
-      citiesArray.push(city);
-    localStorage.setItem("cities", JSON.stringify(citiesArray))
-   generateButtons();
+    displayCurrentCity(city);
+    citiesArray.push(city);
+    //Setting the searched cities into localstorage
+    localStorage.setItem("cities", JSON.stringify(citiesArray));
+    generateButtons();
   });
-  function getLocalStorage(){
+
+//Get the cities stored and set it equal to the citiesArray
+  function getLocalStorage() {
     var storage = JSON.parse(localStorage.getItem("cities"));
     if (storage !== null) {
-        citiesArray = storage;
+      citiesArray = storage;
     }
   }
-  //To list searched cities and make them buttons to see weather
-  function generateButtons(){
+  //Make buttons of the searched cities and push to city array
+  function generateButtons() {
     $("#cities-history").empty();
-    for(i=0;i<citiesArray.length;i++){
+    for (i = 0; i < citiesArray.length; i++) {
       var cityButton = $("<button id='city-button'>");
-      cityButton.addClass("button").attr("data-name", citiesArray[i]);
-      cityButton.text(citiesArray[i])
-      $("#cities-history").append(cityButton)
+      cityButton.addClass("button city-el").attr("data-name", citiesArray[i]);
+      cityButton.text(citiesArray[i]);
+      $("#cities-history").append(cityButton);
     }
   }
   //When user clicks list of buttons it'll display that city's weather
-// $("button").on("click", function(event){
-//   event.preventDefault();
-//   displayCurrentCity();
-// })
+  // $("button").on("click", function(event){
+  //   event.preventDefault();
+  //   displayCurrentCity();
+  // })
   //When button is clicked, event listener listens for user click
 
-  // Still need to work on changing default city to user input....
   //Function to perform AJAX request to display weather of city
   function displayCurrentCity(city) {
     var queryURL =
-      "https://api.openweathermap.org/data/2.5/weather?q="+ city+ "&appid=50a87d4b351a7113897cea2824a44158";
+      "https://api.openweathermap.org/data/2.5/weather?q=" +
+      city +
+      "&appid=50a87d4b351a7113897cea2824a44158";
     $.ajax({
       url: queryURL,
       method: "GET",
@@ -58,20 +60,20 @@ $(document).ready(function () {
       console.log(queryURL);
       console.log(response);
       //icon
-      var icon = response.weather[0].icon
-      console.log(icon)
+      var icon = response.weather[0].icon;
+      console.log(icon);
       //icon url http://openweathermap.org/img/wn/10d@2x.png
       // var imageIcon= $("<img>").attr("src","http://openweathermap.org/img/w/"+ icon +".png")
-      var imageIconURL = "http://openweathermap.org/img/w/" + icon +".png";
-      var imgEl = $("<img>").attr("src", imageIconURL)
+      var imageIconURL = "http://openweathermap.org/img/w/" + icon + ".png";
+      var imgEl = $("<img>").attr("src", imageIconURL);
       $("#city-name").html("<h2>" + response.name + "</h2>");
       var currentDate = moment().format("L");
       var dateEl = $("<span>").text("(" + currentDate + ")");
       $("#city-name").append(dateEl).append(imgEl);
       var tempF = (response.main.temp - 273.15) * 1.8 + 32;
-      $("#temperature").text("Temperature: " + tempF.toFixed(2)+ "°F");
+      $("#temperature").text("Temperature: " + tempF.toFixed(2) + "°F");
       $("#wind-speed").text("Wind Speed: " + response.wind.speed + "MPH");
-      $("#humidity").text("Humidity: " + response.main.humidity +"%");
+      $("#humidity").text("Humidity: " + response.main.humidity + "%");
 
       //UV-Index AJAX Call
       //Setting Latitude and Longitude to var so that it can be accessed easily
@@ -108,13 +110,12 @@ $(document).ready(function () {
           spanEl.css({ "background-color": "red", color: "white" });
         }
       });
-      //five day forecast
-      //append to #daily-forecast
-      //how?
-      //similar to the other ajax calls
 
+      // 5 day forecast ajax call
       var forecastURL =
-        "https://api.openweathermap.org/data/2.5/forecast?q="+ city+"&appid=" +
+        "https://api.openweathermap.org/data/2.5/forecast?q=" +
+        city +
+        "&appid=" +
         apiKey;
       console.log(forecastURL);
       $.ajax({
@@ -126,28 +127,34 @@ $(document).ready(function () {
         //Iterate through api array to retrieve forecast
         for (var i = 0; i < response.list.length; i++) {
           //retrieve the 5 day forecast of only 3:00pm
-            if(response.list[i].dt_txt.indexOf("15:00:00")!== -1){
-              var cardDiv = $("<div class='card-body'>")
-              //retrieving the daily dates
-              $("#daily-forecast").append(cardDiv)
-              var dateEl= moment(response.list[i].dt_txt).format("MM/DD/YYYY")
-              var forecastDate = $("<h3>").text(dateEl);
-              //retrieving the daily temperatures
-              var dailyTempEl= (response.list[i].main.temp - 273.15)* 1.80+32;
-              var tempEl= $("<p>").text("Temp: " + dailyTempEl.toFixed(2) +"F");
-              //retrieving daily humidity
-              var dailyHumidityEl= $("<p>").text("Humidity: "+ response.list[i].main.humidity + "%");
-              //retrieving weather icons
-              var imgIcon2= response.list[i].weather[0].icon;
-              var imgIconURL="http://openweathermap.org/img/w/"+ imgIcon2 + ".png"
-              var imgEl2 = $("<img>").attr("src", imgIconURL)
-              //appending elements
-              cardDiv.append(forecastDate).append(imgEl2).append(tempEl).append(dailyHumidityEl)
-              $("#daily-forecast").append(cardDiv);
-            }
+          if (response.list[i].dt_txt.indexOf("15:00:00") !== -1) {
+            var cardDiv = $("<div class='card-body'>");
+            //retrieving the daily dates
+            $("#daily-forecast").append(cardDiv);
+            var dateEl = moment(response.list[i].dt_txt).format("MM/DD/YYYY");
+            var forecastDate = $("<h3>").text(dateEl);
+            //retrieving the daily temperatures
+            var dailyTempEl = (response.list[i].main.temp - 273.15) * 1.8 + 32;
+            var tempEl = $("<p>").text("Temp: " + dailyTempEl.toFixed(2) + "F");
+            //retrieving daily humidity
+            var dailyHumidityEl = $("<p>").text(
+              "Humidity: " + response.list[i].main.humidity + "%"
+            );
+            //retrieving weather icons
+            var imgIcon2 = response.list[i].weather[0].icon;
+            var imgIconURL =
+              "http://openweathermap.org/img/w/" + imgIcon2 + ".png";
+            var imgEl2 = $("<img>").attr("src", imgIconURL);
+            //appending elements
+            cardDiv
+              .append(forecastDate)
+              .append(imgEl2)
+              .append(tempEl)
+              .append(dailyHumidityEl);
+            $("#daily-forecast").append(cardDiv);
+          }
         }
       });
-    
     });
   }
 });
